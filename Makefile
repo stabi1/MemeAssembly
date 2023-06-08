@@ -28,12 +28,15 @@ FILES=compiler/memeasm.c compiler/compiler.c compiler/logger/log.c compiler/pars
 .PHONY: all clean debug uninstall install windows
 
 # Standard compilation
-all:
+all: parser
 	$(CC) -o memeasm $(FILES) $(CFLAGS)
 
 # Compilation with debugging-flags
-debug:
+debug: parser
 	$(CC) -o memeasm $(FILES) $(CFLAGS) $(CFLAGS_DEBUG)
+
+parser:
+	cd compiler/parser && flex MemeAssembly.l && bison MemeAssembly.y
 
 # Remove the compiled executable from this directory
 clean: 
